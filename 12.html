@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Альфа – Агентство недвижимости</title>
+<style>
+  body {font-family: Arial, sans-serif; margin:0; background:#f4f4f4; color:#333;}
+  header, footer {background:#004080; color:#fff; padding:20px; text-align:center;}
+  nav a {color:#fff; margin:0 10px; text-decoration:none; cursor:pointer;}
+  .container {max-width:1200px; margin:20px auto; padding:0 15px;}
+  h1,h2 {color:#004080;}
+  .filters {display:flex; flex-wrap:wrap; gap:10px; margin-bottom:20px; justify-content:center;}
+  select,input[type=number] {padding:10px; border:1px solid #ccc; border-radius:5px;}
+  .catalog {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px;}
+  .card {background:#fff; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); padding:15px;}
+  .card img {width:100%; border-radius:5px;}
+  .lang-switch {text-align:center; margin-bottom:15px;}
+  button, input[type=submit] {background:#004080; color:#fff; border:none; padding:10px 15px; border-radius:5px; cursor:pointer;}
+  button:hover, input[type=submit]:hover {background:#003060;}
+  form {max-width:400px; margin:auto;}
+  input,textarea,select {width:100%; margin-bottom:10px; border-radius:4px; border:1px solid #ccc; padding:10px; box-sizing:border-box;}
+  .contact-links {text-align:center; margin: 15px 0;}
+  .contact-links a {display:inline-block; margin:0 10px; padding:10px 20px; border-radius:5px; color:#fff; text-decoration:none; font-weight:bold;}
+  .whatsapp {background:#25D366;}
+  .telegram {background:#0088cc;}
+  #map {width:100%; height:300px; border-radius:8px; margin-top:20px;}
+  .add-object-form {background:#fff; padding:15px; border-radius:8px; max-width:500px; margin:30px auto;}
+  .hidden {display:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1 data-lang-ru="Альфа – Агентство недвижимости" data-lang-kg="Альфа – Жылжымай турган мүлк агенттиги">Альфа – Агентство недвижимости</h1>
+  <nav>
+    <a onclick="scrollToSection('catalog')" data-lang-ru="Каталог" data-lang-kg="Каталог">Каталог</a>
+    <a onclick="scrollToSection('services')" data-lang-ru="Услуги" data-lang-kg="Кызматтар">Услуги</a>
+    <a onclick="scrollToSection('contacts')" data-lang-ru="Контакты" data-lang-kg="Байланыштар">Контакты</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <div class="lang-switch">
+    <button onclick="switchLang('ru')" id="btn-ru" style="font-weight:bold;">Русский</button>
+    <button onclick="switchLang('kg')" id="btn-kg">Кыргызча</button>
+  </div>
+
+  <section id="catalog">
+    <h2 data-lang-ru="Каталог недвижимости" data-lang-kg="Жылжымай турган мүлктөрдүн каталогун">Каталог недвижимости</h2>
+
+    <form id="filterForm" class="filters" oninput="filterCatalog()">
+      <select name="type" id="filter-type">
+        <option value="" data-lang-ru="Тип недвижимости" data-lang-kg="Жылжымай турган мүлктүн түрү">Тип недвижимости</option>
+        <option value="квартира" data-lang-ru="Квартира" data-lang-kg="Квартира">Квартира</option>
+        <option value="дом" data-lang-ru="Дом" data-lang-kg="Үй">Дом</option>
+        <option value="офис" data-lang-ru="Офис" data-lang-kg="Офис">Офис</option>
+      </select>
+
+      <select name="district" id="filter-district">
+        <option value="" data-lang-ru="Район" data-lang-kg="Район">Район</option>
+        <option value="южный" data-lang-ru="Южный" data-lang-kg="Түштүк">Южный</option>
+        <option value="центр" data-lang-ru="Центр" data-lang-kg="Борбор">Центр</option>
+        <option value="северный" data-lang-ru="Северный" data-lang-kg="Түндүк">Северный</option>
+      </select>
+
+      <input type="number" name="price" id="filter-price" placeholder="Макс. цена (сом)" data-lang-placeholder-ru="Макс. цена (сом)" data-lang-placeholder-kg="Макс. баасы (сом)" />
+    </form>
+
+    <div class="catalog" id="catalog-list">
+      <!-- Объекты недвижимости -->
+      <div class="card" data-type="квартира" data-district="южный" data-price="4200000">
+        <img src="https://via.placeholder.com/300x200" alt="Квартира">
+        <h3 data-lang-ru="2-комнатная квартира" data-lang-kg="2 бөлмөлүү квартира">2-комнатная квартира</h3>
+        <p data-lang-ru="Южный район • 60 м² • 3 этаж • 4.2 млн сом" data-lang-kg="Түштүк район • 60 м² • 3 кабат • 4.2 млн сом">Южный район • 60 м² • 3 этаж • 4.2 млн сом</p>
+      </div>
+
+      <div class="card" data-type="дом" data-district="северный" data-price="9500000">
+        <img src="https://via.placeholder.com/300x200" alt="Дом">
+        <h3 data-lang-ru="Частный дом" data-lang-kg="Жеке үй">Частный дом</h3>
+        <p data-lang-ru="Северный район • 140 м² • участок 6 соток • 9.5 млн сом" data-lang-kg="Түндүк район • 140 м² • 6 сотых участок • 9.5 млн сом">Северный район • 140 м² • участок 6 соток • 9.5 млн сом</p>
+      </div>
+
+      <div class="card" data-type="офис" data-district="центр" data-price="65000">
+        <img src="https://via.placeholder.com/300x200" alt="Офис">
+        <h3 data-lang-ru="Офисное помещение" data-lang-kg="Офис жайы">Офисное помещение</h3>
+        <p data-lang-ru="Центр • 85 м² • аренда 65 000 сом/мес" data-lang-kg="Борбор • 85 м² • ижара 65 000 сом/айына">Центр • 85 м² • аренда 65 000 сом/мес</p>
+      </div>
+
+      <div class="card" data-type="дом" data-district="центр" data-price="7800000">
+        <img src="https://via.placeholder.com/300x200" alt="Дом">
+        <h3 data-lang-ru="Дом в центре" data-lang-kg="Үй борбордо">Дом в центре</h3>
+        <p data-lang-ru="Центр • 110 м² • участок 4 сотки • 7.8 млн сом" data-lang-kg="Борбор • 110 м² • 4 сотых участок • 7.8 млн сом">Центр • 110 м² • участок 4 сотки • 7.8 млн сом</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" style="margin-top:50px;">
+    <h2 data-lang-ru="Наши услуги" data-lang-kg="Биздин кызматтар">Наши услуги</h2>
+    <ul>
+      <li data-lang-ru="Продажа и покупка квартир и домов" data-lang-kg="Квартира жана үйлөрдү сатуу жана сатып алуу">Продажа и покупка квартир и домов</li>
+      <li data-lang-ru="Аренда жилой и коммерческой недвижимости" data-lang-kg="Туруктуу жана коммерциялык жылжымай турган мүлктү ижарага алуу">Аренда жилой и коммерческой недвижимости</li>
+      <li data-lang-ru="Сдача недвижимости в аренду" data-lang-kg="Жылжымай турган мүлктү ижарага берүү">Сдача недвижимости в аренду</li>
+      <li data-lang-ru="Продажа земельных участков" data-lang-kg="Жер участкаларын сатуу">Продажа земельных участков</li>
+      <li data-lang-ru="Юридическое сопровождение сделок" data-lang-kg="Мамилелерди юридикалык колдоо">Юридическое сопровождение сделок</li>
+      <li data-lang-ru="Оценка недвижимости" data-lang-kg="Жылжымай турган мүлктү баалоо">Оценка недвижимости</li>
+      <li data-lang-ru="Консультации по ипотеке и документам" data-lang-kg="Ипотека жана документтер боюнча консультация">Консультации по ипотеке и документам</li>
+    </ul>
+  </section>
+
+  <section id="contacts" style="margin-top:50px;">
+    <h2 data-lang-ru="Контакты" data-lang-kg="Байланыштар">Контакты</h2>
+    <form action="https://formspree.io/f/xwkzykgk" method="POST" target="_blank" >
+      <input type="text" name="name" placeholder="Ваше имя" required data-lang-placeholder-ru="Ваше имя" data-lang-placeholder-kg="Сиздин атыңыз" />
+      <input type="email" name="email" placeholder="Email" required data-lang-placeholder-ru="Email" data-lang-placeholder-kg="Электрондук почта" />
+      <textarea name="message" rows="4" placeholder="Ваше сообщение" required data-lang-placeholder-ru="Ваше сообщение" data-lang-placeholder-kg="Сиздин билдирүү" ></textarea>
+      <input type="hidden" name="_subject" value="Заявка с сайта Альфа" />
+      <input type="submit" value="Отправить" data-lang-value-ru="Отправить" data-lang-value-kg="Жөнөтүү" />
+    </form>
+
+    <div class="contact-links">
+      <a href="https://wa.me/996700123456" target="_blank" class="whatsapp">WhatsApp</a>
+      <a href="https://t.me/estate_alpha" target="_blank" class="telegram">Telegram</a>
+    </div>
+
+    <p style="text-align:center;">📞 +996 700 123 456<br />📧 alfacom.bishkek@gmail.com</p>
+
+    <div id="map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2924.9999999999995!2d74.590000!3d42.870000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb7daaf0cccfb%3A0xdeadbeefdeadbeef!2z0JrQvtGA0YPRgNCw0YDQvtC90L3QvtC5INCf0LDRgNC40LvQuNC90L7QvNC4INGC0LDQvdC40Y8!5e0!3m2!1sru!2skg!4v1611123456789"
+        width="100%" height="300" style="border:0; border-radius:8px;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <section style="margin-top:50px;">
+    <h2 data-lang-ru="Добавить объект" data-lang-kg="Объект кошуу">Добавить объект</h2>
+    <form id="addObjectForm" class="add-object-form" onsubmit="return addObject(event)">
+      <input type="text" id="objTitle" placeholder="Название объекта" required data-lang-placeholder-ru="Название объекта" data-lang-placeholder-kg="Объекттин аты" />
+      <select id="objType" required>
+        <option value="" data-lang-ru="Тип недвижимости" data-lang-kg="Жылжымай турган мүлктүн түрү">Тип недвижимости</option>
+        <option value="квартира" data-lang-ru="Квартира" data-lang-kg="Квартира">Квартира</option>
+        <option value="дом" data-lang-ru="Дом" data-lang-kg="Үй">Дом</option>
+        <option value="офис" data-lang-ru="Офис" data-lang-kg="Офис">Офис</option>
+      </select>
+      <select id="objDistrict" required>
+        <option value="" data-lang-ru="Район" data-lang-kg="Район">Район</option>
+        <option value="южный" data-lang-ru="Южный" data-lang-kg="Түштүк">Южный</option>
+        <option value="центр" data-lang-ru="Центр" data-lang-kg="Борбор">Центр</option>
+        <option value="северный" data-lang-ru="Северный" data-lang-kg="Түндүк">Северный</option>
+      </select>
+      <input type="number" id="objPrice" placeholder="Цена (сом)" required data-lang-placeholder-ru="Цена (сом)" data-lang-placeholder-kg="Баасы (сом)" />
+      <input type="url" id="objImage" placeholder="URL картинки" required data-lang-placeholder-ru="URL картинки" data-lang-placeholder-kg="Сүрөттүн URL" />
+      <button type="submit" data-lang-ru="Добавить объект" data-lang-kg="Объект кошуу">Добавить объект</button>
+    </form>
+  </section>
+
+</div>
+
+<footer>
+  &copy; 2025 Альфа – Агентство недвижимости. Все права защищены.
+</footer>
+
+<script>
+  // Языковое переключение
+  let currentLang = 'ru';
+  function switchLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('[data-lang-ru]').forEach(el => {
+      el.style.display = (lang === 'ru') ? '' : 'none';
+    });
+    document.querySelectorAll('[data-lang-kg]').forEach(el => {
+      el.style.display = (lang === 'kg') ? '' : 'none';
+    });
+    // placeholder и value для инпутов
+    document.querySelectorAll('[data-lang-placeholder-ru]').forEach(el => {
+      el.placeholder = (lang === 'ru') ? el.getAttribute('data-lang-placeholder-ru') : el.getAttribute('data-lang-placeholder-kg');
+    });
+    document.querySelectorAll('[data-lang-value-ru]').forEach(el => {
+      el.value = (lang === 'ru') ? el.getAttribute('data-lang-value-ru') : el.getAttribute('data-lang-value-kg');
+    });
+    // кнопки переключения языка
+    document.getElementById('btn-ru').style.fontWeight = (lang === 'ru') ? 'bold' : 'normal';
+    document.getElementById('btn-kg').style.fontWeight = (lang === 'kg') ? 'bold' : 'normal';
+  }
+  switchLang('ru'); // стартовый язык
+
+  // Фильтрация каталога
+  function filterCatalog() {
+    const type = document.getElementById('filter-type').value;
+    const district = document.getElementById('filter-district').value;
+    const price = parseFloat(document.getElementById('filter-price').value) || Infinity;
+
+    document.querySelectorAll('.catalog .card').forEach(card => {
+      const cType = card.dataset.type;
+      const cDistrict = card.dataset.district;
+      const cPrice = parseFloat(card.dataset.price);
+
+      const show = (!type || cType === type) &&
+                   (!district || cDistrict === district) &&
+                   (cPrice <= price);
+      card.style.display = show ? 'block' : 'none';
+    });
+  }
+
+  // Плавный скролл по секциям
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({behavior: 'smooth'});
+  }
+
+  // Форма добавления объекта (визуально добавляет в каталог)
+  function addObject(event) {
+    event.preventDefault();
+    const title = document.getElementById('objTitle').value.trim();
+    const type = document.getElementById('objType').value;
+    const district = document.getElementById('objDistrict').value;
+    const price = document.getElementById('objPrice').value.trim();
+    const image = document.getElementById('objImage').value.trim();
+
+    if (!title || !type || !district || !price || !image) {
+      alert(currentLang === 'ru' ? 'Пожалуйста,
